@@ -13,7 +13,7 @@ import (
 func main() {
 	if len(os.Args) < 3 {
 		fmt.Println("参数错误: 运行示例:csv2xls <csv文件路径> <要保存的xlsx文件路径>")
-		log.Fatal("参数错误: 运行示例:csv2xls <csv文件路径> <要保存的xlsx文件路径>")
+		os.Exit(0)
 	}
 
 	inFile := os.Args[1]
