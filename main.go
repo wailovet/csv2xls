@@ -5,12 +5,33 @@ import (
 	"fmt"
 	"github.com/360EntSecGroup-Skylar/excelize"
 	"github.com/tealeg/xlsx"
+	"github.com/wailovet/osmanthuswine"
+	"github.com/wailovet/osmanthuswine/src/core"
 	"log"
 	"os"
 	"path/filepath"
 )
 
+type Csv2xlsx struct {
+	core.Controller
+}
+
+func (that *Csv2xlsx) ToXlsx() {
+
+	inFile := that.Request.REQUEST["inFile"]
+	inFile, _ = filepath.Abs(inFile)
+
+	outFile := that.Request.REQUEST["outFile"]
+	outFile, _ = filepath.Abs(outFile)
+	to(inFile, outFile)
+}
+
 func main() {
+
+	core.GetInstanceRouterManage().Registered(&Csv2xlsx{})
+	core.GetInstanceConfig().Port = "17003"
+	osmanthuswine.Run()
+
 	if len(os.Args) < 3 {
 		fmt.Println("参数错误: 运行示例:csv2xls <csv文件路径> <要保存的xlsx文件路径>")
 		os.Exit(0)
@@ -22,6 +43,9 @@ func main() {
 	outFile := os.Args[2]
 	outFile, _ = filepath.Abs(outFile)
 
+}
+
+func to(inFile string, outFile string) {
 	csvFile, err := os.Open(inFile)
 	if err != nil {
 		log.Fatal(err)
@@ -35,7 +59,6 @@ func main() {
 	}
 
 	toXlsx(data, outFile)
-
 }
 
 func toXlsx(data [][]string, outFile string) {
