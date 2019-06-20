@@ -8,7 +8,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 func main() {
@@ -34,15 +33,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	start := time.Now()
 	toXlsx(data, outFile)
-	cost := time.Since(start)
-	fmt.Printf("toXlsx1=[%s]", cost)
-
-	start = time.Now()
-	toXlsx2(data, outFile)
-	cost = time.Since(start)
-	fmt.Printf("toXlsx2=[%s]", cost)
 
 }
 
